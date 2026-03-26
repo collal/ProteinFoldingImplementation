@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class ProteinFoldingAction extends Action {
 
-    public static final int OFFSET = 3;
+    public static final int OFFSET = 6; // use this to give cost of a step; helps make an admissibile heuristic
 
     public static enum ACTION {
         // do not need to know if we put a H or a P -> if we put a P, will always have numContacts 0
@@ -92,5 +92,9 @@ public class ProteinFoldingAction extends Action {
 
     public String toString() {
         return action.toString();
+    }
+
+    public int getNumContacts() {
+        return this.action.numContacts;
     }
 }

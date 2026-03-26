@@ -28,7 +28,7 @@ public class ProteinFolding extends Problem implements Callable<Integer> {
                     "0 corresponds to 'standard', while higher numbers correspond to higher verbosity.")
     private int vlevel;
 
-    public static enum Heuristics { PAIRS }
+    public static enum Heuristics { PAIRS, ANTIPAIRS} // these heuristics are consistent and optimise to some extent; should find better heuristics tho
     private ProteinFolding.Heuristics h;
 
     private int xStart, yStart;
@@ -212,6 +212,7 @@ public class ProteinFolding extends Problem implements Callable<Integer> {
                     ProteinFoldingState finalState = ProteinFoldingState.getFinalState(initialState, result);
                     System.out.println(finalState);
                     System.out.println("Energy: " + finalState.getEnergy());
+                    System.out.println("hValue at End: " + finalState.getHPairs());
                 } else System.out.printf("\n\n\nNo solution found by algorithm %s%n", explorer);
             }
             return 0;

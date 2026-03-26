@@ -12,7 +12,6 @@ public class ProteinFoldingState extends State {
 
     private int numCellsPlaced;
     private int xCurr,  yCurr; // most recent cell visited
-    private int xPrev, yPrev; // need to track prev cell for calculating number of contacts
     private double energy, cost;
 
     public class CartesianCharGrid implements Cloneable{
@@ -98,12 +97,11 @@ public class ProteinFoldingState extends State {
         numCellsPlaced = 0;
         xCurr = p.getXStart();
         yCurr = p.getYStart();
-        xPrev = xCurr;
-        yPrev = yCurr;
         energy = 0;
         cost = 0;
         values = new CartesianCharGrid(p.getMinX(), p.getMaxX(), p.getMinY(), p.getMaxY());
-        hPairs = this.numPairs() * ProteinFoldingAction.OFFSET;
+        hPairs = this.numPairs();
+        hAntiPairs = this.numPairs();
     }
 
     public static ProteinFoldingState initialState(ProteinFolding p) {
@@ -167,18 +165,55 @@ public class ProteinFoldingState extends State {
     }
 
     private int hPairs;
+    private int hAntiPairs;
+
+    public int getHPairs() {
+        return hPairs;
+    }
 
     private int numPairs() {
-        // finds the number of pairs of non-consecutive Hs
+        // finds the number of pairs of viable-contact Hs
         int result = 0;
         String protein = ( (ProteinFolding)this.getProblem()).getProtein();
         for (int i = 0; i < ( (ProteinFolding)this.getProblem()).getSize(); i++) {
             if (protein.charAt(i) == 'H') {
                 for (int j = i + 2; j < ((ProteinFolding) this.getProblem()).getSize(); j++) {
-                    if (protein.charAt(j) == 'H') {
+                    // use i + 2 to skip consecutive Hs
+                    if (protein.charAt(j) == 'H' && (j - i) % 2 == 1) {
+                        // can only get contacts when Hs are an odd number apart
                         result += 1;
+                        System.out.println(i);
+                        System.out.println(j);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    private int updateHAntiPairs(int xCurr, int yCurr, int ind, int numContacts) {
+        String protein = ((ProteinFolding) this.getProblem()).getProtein();
+        int numMatchesWanted = this.numPrevPossMatches(xCurr, yCurr, ind);
+
+        if (numMatchesWanted == 0) {
+            return this.hAntiPairs; // no change
+        } else if (numMatchesWanted > numContacts) {
+            return this.hAntiPairs + 5 * (numMatchesWanted - numContacts); // punish moves in wrong direction; 5 is arbitrary constant
+        } else if (numMatchesWanted == numContacts) {
+            return this.hAntiPairs - numContacts; // reward moves in right direction
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private int numPrevPossMatches(int xCurr, int yCurr, int index) {
+        // number of possible matches that the protein at this index could have had with previous proteins
+        int result = 0;
+        String protein = ( (ProteinFolding)this.getProblem()).getProtein();
+        if (protein.charAt(index) != 'H') return 0;
+        for (int i = 0; i < index - 1; i++) {
+            if (protein.charAt(i) == 'H' && (index - i) % 2 == 1) {
+                result += 1;
             }
         }
         return result;
@@ -191,10 +226,6 @@ public class ProteinFoldingState extends State {
 
         char dir = ((ProteinFoldingAction)a).getDir();
         double cost = a.getCost();
-
-        // place next protein
-        xPrev = xCurr;
-        yPrev = yCurr;
 
         if (dir == 'L') {
             result.values.replace(xCurr-1, yCurr, ((ProteinFolding)this.getProblem()).getProtein().charAt(numCellsPlaced));
@@ -217,7 +248,9 @@ public class ProteinFoldingState extends State {
         result.cost += cost;
         result.energy += ProteinFoldingAction.costToEnergy(cost);
 
-        result.hPairs -= ProteinFoldingAction.OFFSET * (-(int) result.energy);
+        int numContacts = ((ProteinFoldingAction) a).getNumContacts();
+        result.hPairs -= numContacts;
+        result.hAntiPairs = result.updateHAntiPairs(xCurr, yCurr, numPlaced, numContacts);
 
         return result;
     }
@@ -278,6 +311,7 @@ public class ProteinFoldingState extends State {
     public ProteinFoldingState clone() {
         ProteinFoldingState myClone = (ProteinFoldingState) super.clone();
         myClone.values = this.values.clone();
+        myClone.hPairs = this.hPairs;
         return myClone;
     }
 
@@ -300,6 +334,7 @@ public class ProteinFoldingState extends State {
         }
         switch (h) {
             case PAIRS: return hPairs;
+            case ANTIPAIRS: return hAntiPairs;
             default: throw new RuntimeException("Heuristics " + h + " unknown");
         }
     }

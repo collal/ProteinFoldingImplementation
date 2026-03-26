@@ -1,3 +1,7 @@
+# Esercitazione A.3.3
+
+Implementation of Protein Folding scenario using basic heuristic, developed using the SearchStateExplorer code provided.
+
 # SearchStateExplorer
 
 A search framework written in Java. It implements the following algorithms:
