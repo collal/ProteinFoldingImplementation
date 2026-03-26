@@ -1,0 +1,17 @@
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/Action.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/AstarExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/BFSExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/BestFirstGreedyExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/DFSExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/FIFOFrontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/Frontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/LIFOFrontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/MinCostExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/MinFcostFrontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/MinGcostFrontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/MinHcostFrontier.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/Problem.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/SearchNode.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/SearchStateExplorer.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/it/uniroma1/di/tmancini/teaching/ai/search/State.java
+/Users/lydiacolla/Documents/GitHub/searchstateexplorer/searchstateexplorer-framework/src/main/java/picocli/CommandLine.java
