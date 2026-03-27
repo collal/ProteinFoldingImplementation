@@ -199,8 +199,19 @@ public class ProteinFoldingState extends State {
             return this.hAntiPairs; // no change
         } else if (numMatchesWanted > numContacts) {
             return this.hAntiPairs + 5 * (numMatchesWanted - numContacts); // punish moves in wrong direction; 5 is arbitrary constant
+            /* h consistente perché h(n') + costo-di-passo = h(n) + k(numMatchesWanted - numContacts) + 6 - numContacts
+                                                            = h(n) + 6 + k(numMatchesWanted) - (k+1)*numContacts
+                                                            >= h(n) + 6 + k(numContacts + 1) - (k+1)*numContacts
+                                                            = h(n) + 6 + k - numContacts
+                                                            >= h(n) since numContacts <= 3, k arbitrary constant > 0
+            */
         } else if (numMatchesWanted == numContacts) {
-            return this.hAntiPairs - numContacts; // reward moves in right direction
+            return this.hAntiPairs - numContacts; // reward moves in right direction, same as hPairs
+            /* h consistente perché h(n') + costo-di-passo = h(n) - numContacts + 6 - numContacts
+                                                            = h(n) + 6 - 2*numContacts
+                                                            >= h(n) + 6 - 2*3 (numContacts <= 3)
+                                                            = h(n) 
+            */
         } else {
             throw new IllegalArgumentException();
         }
